@@ -33,13 +33,14 @@ func NewFilterMode(app *tview.Application) *FilterMode {
 	}
 
 	inputField.SetDoneFunc(func(key tcell.Key) {
-		if key == tcell.KeyEnter {
+		switch key {
+		case tcell.KeyEnter:
 			filterText := inputField.GetText()
 			fm.Hide()
 			if fm.onFilter != nil {
 				fm.onFilter(filterText)
 			}
-		} else if key == tcell.KeyEsc {
+		case tcell.KeyEsc:
 			fm.Hide()
 			if fm.onCancel != nil {
 				fm.onCancel()

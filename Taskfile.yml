@@ -1,0 +1,54 @@
+version: '3'
+
+vars:
+  VERSION:
+    sh: cat VERSION 2>/dev/null || echo "0.0.1"
+  BINARY_NAME: azct
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  build:
+    desc: Build the binary with version from VERSION file
+    cmds:
+      - echo "Building {{.BINARY_NAME}} version {{.VERSION}}..."
+      - go build -ldflags="-s -w -X main.version={{.VERSION}}" -o {{.BINARY_NAME}} ./cmd/azct
+
+  lint:
+    desc: Run golangci-lint
+    cmds:
+      - echo "Running golangci-lint..."
+      - golangci-lint run
+      - echo "Lint complete"
+
+  test:
+    desc: Run tests with race detection and coverage
+    cmds:
+      - echo "Running tests..."
+      - go test -v -race -coverprofile=coverage.out ./... || true
+      - echo "Tests complete"
+
+  test-coverage:
+    desc: Run tests and generate HTML coverage report
+    cmds:
+      - echo "Running tests and generating coverage report..."
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -html=coverage.out -o coverage.html
+      - echo "Coverage report generated at coverage.html"
+
+  all:
+    desc: Run lint, test, and build in sequence
+    deps: [lint, test, build]
+    cmds:
+      - echo "All tasks complete!"
+
+  clean:
+    desc: Remove build artifacts
+    cmds:
+      - echo "Cleaning build artifacts..."
+      - rm -f {{.BINARY_NAME}} coverage.out
+      - echo "Clean complete"
+

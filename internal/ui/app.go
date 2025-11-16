@@ -170,35 +170,36 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 		}
 
 		// Handle key bindings for table views
-		if navState.CurrentView == navigation.ViewSubscriptions {
+		switch navState.CurrentView {
+		case navigation.ViewSubscriptions:
 			if handled := subscriptionsView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewResourceGroups {
+		case navigation.ViewResourceGroups:
 			if handled := resourceGroupsView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewResourceTypes {
+		case navigation.ViewResourceTypes:
 			if handled := resourceTypesView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewResources {
+		case navigation.ViewResources:
 			if handled := resourcesView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewResourceType {
+		case navigation.ViewResourceType:
 			if handled := resourcesView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewStorageExplorer {
+		case navigation.ViewStorageExplorer:
 			if handled := storageExplorerView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewBlobs {
+		case navigation.ViewBlobs:
 			if handled := blobsView.HandleKey(event); handled != event {
 				return handled
 			}
-		} else if navState.CurrentView == navigation.ViewMenu {
+		case navigation.ViewMenu:
 			if handled := menuView.HandleKey(event); handled != event {
 				return handled
 			}
@@ -206,27 +207,28 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 
 		switch event.Key() {
 		case tcell.KeyEscape:
-			if navState.CurrentView == navigation.ViewMenu {
+			switch navState.CurrentView {
+			case navigation.ViewMenu:
 				// Go back from menu to previous view
 				a.navigateBackFromMenu()
 				return nil
-			} else if navState.CurrentView == navigation.ViewBlobs {
+			case navigation.ViewBlobs:
 				// Go back to storage explorer
 				a.navigateBackFromBlobs()
 				return nil
-			} else if navState.CurrentView == navigation.ViewStorageExplorer {
+			case navigation.ViewStorageExplorer:
 				// Go back to resource type view
 				a.navigateBackToResourceType()
 				return nil
-			} else if navState.CurrentView == navigation.ViewResourceType {
+			case navigation.ViewResourceType:
 				// Go back to resource types view
 				a.navigateBackToResourceTypes()
 				return nil
-			} else if navState.CurrentView == navigation.ViewResourceTypes {
+			case navigation.ViewResourceTypes:
 				// Go back to resource groups view
 				a.navigateBackToResourceGroups()
 				return nil
-			} else if navState.CurrentView == navigation.ViewResourceGroups {
+			case navigation.ViewResourceGroups:
 				a.navigateToSubscriptions()
 				return nil
 			}
@@ -325,7 +327,7 @@ func (a *App) updateLayout() {
 	// Add footer at the bottom
 	a.mainFlex.AddItem(a.footerView, 1, 0, false)
 
-	a.Application.SetRoot(a.mainFlex, true)
+	a.SetRoot(a.mainFlex, true)
 }
 
 // updateFooterForTableView updates the footer based on a table view
@@ -407,11 +409,6 @@ func (a *App) updateViewTitle() {
 	a.viewTitleView.SetViewName(viewName)
 }
 
-// updateFooter updates the footer with counts
-func (a *App) updateFooter(totalCount, filteredCount int, hasFilter bool) {
-	a.footerView.UpdateCount(totalCount, filteredCount, hasFilter)
-}
-
 // updateFooterWithActions updates the footer with counts and action keys
 func (a *App) updateFooterWithActions(totalCount, filteredCount int, hasFilter bool, actions string) {
 	a.footerView.UpdateCountWithActions(totalCount, filteredCount, hasFilter, actions)
@@ -432,7 +429,7 @@ func (a *App) Start(ctx context.Context) error {
 		return fmt.Errorf("failed to load subscriptions: %w", err)
 	}
 
-	return a.Application.Run()
+	return a.Run()
 }
 
 // loadSubscriptions loads and displays subscriptions
@@ -454,7 +451,7 @@ func (a *App) navigateToSubscriptions() {
 	a.navState.NavigateToSubscriptions()
 	a.headerView.UpdateSelectedSubscription("", "")
 	a.updateLayout()
-	a.Application.SetFocus(a.subscriptionsView)
+	a.SetFocus(a.subscriptionsView)
 }
 
 // navigateToResourceGroups navigates to resource groups view for a subscription
@@ -475,7 +472,7 @@ func (a *App) navigateToResourceGroups(subscriptionID, subscriptionName string) 
 		a.updateFooterForTableView(a.resourceGroupsView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.resourceGroupsView)
+	a.SetFocus(a.resourceGroupsView)
 }
 
 // showSubscriptionDetails shows the details view for a subscription
@@ -483,7 +480,7 @@ func (a *App) showSubscriptionDetails(sub *models.Subscription) {
 	a.navState.NavigateToDetails()
 	a.detailsView.ShowSubscriptionDetails(sub)
 	a.updateLayout()
-	a.Application.SetFocus(a.detailsView)
+	a.SetFocus(a.detailsView)
 }
 
 // showResourceGroupDetails shows the details view for a resource group
@@ -492,27 +489,28 @@ func (a *App) showResourceGroupDetails(rg *models.ResourceGroup) {
 	subscriptionID := a.resourceGroupsView.GetSubscriptionID()
 	a.detailsView.ShowResourceGroupDetails(rg, subscriptionID)
 	a.updateLayout()
-	a.Application.SetFocus(a.detailsView)
+	a.SetFocus(a.detailsView)
 }
 
 // navigateBackFromDetails returns from details view to previous view
 func (a *App) navigateBackFromDetails() {
 	a.navState.NavigateBackFromDetails()
 	a.updateLayout()
-	if a.navState.CurrentView == navigation.ViewSubscriptions {
-		a.Application.SetFocus(a.subscriptionsView)
-	} else if a.navState.CurrentView == navigation.ViewResourceGroups {
-		a.Application.SetFocus(a.resourceGroupsView)
-	} else if a.navState.CurrentView == navigation.ViewResourceTypes {
-		a.Application.SetFocus(a.resourceTypesView)
-	} else if a.navState.CurrentView == navigation.ViewResources || a.navState.CurrentView == navigation.ViewResourceType {
-		a.Application.SetFocus(a.resourcesView)
-	} else if a.navState.CurrentView == navigation.ViewStorageExplorer {
-		a.Application.SetFocus(a.storageExplorerView)
-	} else if a.navState.CurrentView == navigation.ViewBlobs {
-		a.Application.SetFocus(a.blobsView)
-	} else if a.navState.CurrentView == navigation.ViewMenu {
-		a.Application.SetFocus(a.menuView)
+	switch a.navState.CurrentView {
+	case navigation.ViewSubscriptions:
+		a.SetFocus(a.subscriptionsView)
+	case navigation.ViewResourceGroups:
+		a.SetFocus(a.resourceGroupsView)
+	case navigation.ViewResourceTypes:
+		a.SetFocus(a.resourceTypesView)
+	case navigation.ViewResources, navigation.ViewResourceType:
+		a.SetFocus(a.resourcesView)
+	case navigation.ViewStorageExplorer:
+		a.SetFocus(a.storageExplorerView)
+	case navigation.ViewBlobs:
+		a.SetFocus(a.blobsView)
+	case navigation.ViewMenu:
+		a.SetFocus(a.menuView)
 	}
 }
 
@@ -535,7 +533,7 @@ func (a *App) navigateToResourceTypes(resourceGroupName string) {
 		a.updateFooterForTableView(a.resourceTypesView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.resourceTypesView)
+	a.SetFocus(a.resourceTypesView)
 }
 
 // navigateToResourceType navigates to a resource type filtered view
@@ -571,7 +569,7 @@ func (a *App) navigateToResourceType(resourceType string) {
 		a.updateFooterForTableView(a.resourcesView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.resourcesView)
+	a.SetFocus(a.resourcesView)
 }
 
 // navigateBackToResourceTypes returns from resource type view to resource types view
@@ -601,7 +599,7 @@ func (a *App) showResourceDetails(resource *models.Resource) {
 	subscriptionID := a.resourcesView.GetSubscriptionID()
 	a.detailsView.ShowResourceDetails(resource, subscriptionID)
 	a.updateLayout()
-	a.Application.SetFocus(a.detailsView)
+	a.SetFocus(a.detailsView)
 }
 
 // navigateToStorageExplorer navigates to the storage explorer view for a storage account
@@ -624,7 +622,7 @@ func (a *App) navigateToStorageExplorer(resource *models.Resource) {
 		a.updateFooterForTableView(a.storageExplorerView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.storageExplorerView)
+	a.SetFocus(a.storageExplorerView)
 }
 
 // navigateToBlobs navigates to the blobs view for a container
@@ -655,7 +653,7 @@ func (a *App) loadBlobsForCurrentPath() {
 		a.updateFooterForTableView(a.blobsView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.blobsView)
+	a.SetFocus(a.blobsView)
 }
 
 // navigateIntoBlobFolder navigates into a blob folder
@@ -693,7 +691,7 @@ func (a *App) navigateBackFromBlobs() {
 		a.updateFooterForTableView(a.storageExplorerView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.storageExplorerView)
+	a.SetFocus(a.storageExplorerView)
 }
 
 // showContainerDetails shows the details view for a container
@@ -702,7 +700,7 @@ func (a *App) showContainerDetails(container *models.Container) {
 	storageAccountName := a.navState.SelectedStorageAccount
 	a.detailsView.ShowContainerDetails(container, storageAccountName)
 	a.updateLayout()
-	a.Application.SetFocus(a.detailsView)
+	a.SetFocus(a.detailsView)
 }
 
 // showBlobDetails shows the details view for a blob
@@ -723,7 +721,7 @@ func (a *App) showBlobDetails(blob *models.Blob) {
 
 	a.detailsView.ShowBlobDetails(fullBlob, storageAccountName, containerName)
 	a.updateLayout()
-	a.Application.SetFocus(a.detailsView)
+	a.SetFocus(a.detailsView)
 }
 
 // navigateToMenu navigates to the menu view
@@ -741,21 +739,22 @@ func (a *App) navigateToMenu() {
 		a.updateFooterForTableView(a.menuView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.menuView)
+	a.SetFocus(a.menuView)
 }
 
 // navigateBackFromMenu returns from menu view
 func (a *App) navigateBackFromMenu() {
 	a.navState.NavigateBackFromMenu()
 	a.updateLayout()
-	if a.navState.CurrentView == navigation.ViewSubscriptions {
-		a.Application.SetFocus(a.subscriptionsView)
-	} else if a.navState.CurrentView == navigation.ViewResourceGroups {
-		a.Application.SetFocus(a.resourceGroupsView)
-	} else if a.navState.CurrentView == navigation.ViewResourceTypes {
-		a.Application.SetFocus(a.resourceTypesView)
-	} else if a.navState.CurrentView == navigation.ViewResources || a.navState.CurrentView == navigation.ViewResourceType {
-		a.Application.SetFocus(a.resourcesView)
+	switch a.navState.CurrentView {
+	case navigation.ViewSubscriptions:
+		a.SetFocus(a.subscriptionsView)
+	case navigation.ViewResourceGroups:
+		a.SetFocus(a.resourceGroupsView)
+	case navigation.ViewResourceTypes:
+		a.SetFocus(a.resourceTypesView)
+	case navigation.ViewResources, navigation.ViewResourceType:
+		a.SetFocus(a.resourcesView)
 	}
 }
 
@@ -793,7 +792,7 @@ func (a *App) navigateToResourceTypeFromMenu(resourceType string) {
 		a.updateFooterForTableView(a.resourcesView.TableView)
 	}
 	a.updateLayout()
-	a.Application.SetFocus(a.resourcesView)
+	a.SetFocus(a.resourcesView)
 }
 
 // applyFilter applies a filter to the current table view
@@ -802,31 +801,32 @@ func (a *App) applyFilter(filterText string) {
 		return
 	}
 
-	if a.navState.CurrentView == navigation.ViewSubscriptions {
+	switch a.navState.CurrentView {
+	case navigation.ViewSubscriptions:
 		a.subscriptionsView.SetFilter(filterText)
 		a.updateFooterForTableView(a.subscriptionsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResourceGroups {
+	case navigation.ViewResourceGroups:
 		a.resourceGroupsView.SetFilter(filterText)
 		a.updateFooterForTableView(a.resourceGroupsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResourceTypes {
+	case navigation.ViewResourceTypes:
 		a.resourceTypesView.SetFilter(filterText)
 		a.updateFooterForTableView(a.resourceTypesView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResources || a.navState.CurrentView == navigation.ViewResourceType {
+	case navigation.ViewResources, navigation.ViewResourceType:
 		a.resourcesView.SetFilter(filterText)
 		a.updateFooterForTableView(a.resourcesView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewStorageExplorer {
+	case navigation.ViewStorageExplorer:
 		a.storageExplorerView.SetFilter(filterText)
 		a.updateFooterForTableView(a.storageExplorerView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewBlobs {
+	case navigation.ViewBlobs:
 		a.blobsView.SetFilter(filterText)
 		a.updateFooterForTableView(a.blobsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewMenu {
+	case navigation.ViewMenu:
 		a.menuView.SetFilter(filterText)
 		a.updateFooterForTableView(a.menuView.TableView)
 	}
 
 	a.updateLayout()
-	a.Application.SetFocus(a.currentView)
+	a.SetFocus(a.currentView)
 }
 
 // clearFilter clears the filter from the current table view
@@ -835,25 +835,26 @@ func (a *App) clearFilter() {
 		return
 	}
 
-	if a.navState.CurrentView == navigation.ViewSubscriptions {
+	switch a.navState.CurrentView {
+	case navigation.ViewSubscriptions:
 		a.subscriptionsView.ClearFilter()
 		a.updateFooterForTableView(a.subscriptionsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResourceGroups {
+	case navigation.ViewResourceGroups:
 		a.resourceGroupsView.ClearFilter()
 		a.updateFooterForTableView(a.resourceGroupsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResourceTypes {
+	case navigation.ViewResourceTypes:
 		a.resourceTypesView.ClearFilter()
 		a.updateFooterForTableView(a.resourceTypesView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewResources || a.navState.CurrentView == navigation.ViewResourceType {
+	case navigation.ViewResources, navigation.ViewResourceType:
 		a.resourcesView.ClearFilter()
 		a.updateFooterForTableView(a.resourcesView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewStorageExplorer {
+	case navigation.ViewStorageExplorer:
 		a.storageExplorerView.ClearFilter()
 		a.updateFooterForTableView(a.storageExplorerView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewBlobs {
+	case navigation.ViewBlobs:
 		a.blobsView.ClearFilter()
 		a.updateFooterForTableView(a.blobsView.TableView)
-	} else if a.navState.CurrentView == navigation.ViewMenu {
+	case navigation.ViewMenu:
 		a.menuView.ClearFilter()
 		a.updateFooterForTableView(a.menuView.TableView)
 	}
