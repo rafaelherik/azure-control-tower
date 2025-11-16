@@ -141,7 +141,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Documentation
 
-Full documentation is available at: [https://rafaelherik.github.io/azct](https://rafaelherik.github.io/azct)
+Full documentation is available at: [https://rafaelherik.github.io/azure-control-tower](https://rafaelherik.github.io/azure-control-tower)
 
 Or build locally:
 
