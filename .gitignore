@@ -1,8 +1,8 @@
-# Binaries
-azct
-azct-*
-azterm
-azterm-*
+# Binaries (in root directory only)
+/azct
+/azct-*
+/azterm
+/azterm-*
 *.exe
 *.dll
 *.so
