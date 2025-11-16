@@ -1,10 +1,10 @@
 class Azct < Formula
   desc "Terminal-based UI for exploring and managing Azure resources"
-  homepage "https://github.com/yourusername/azure-control-tower"
-  url "https://github.com/yourusername/azure-control-tower/archive/v0.0.1.tar.gz"
+  homepage "https://github.com/rafaelherik/azure-control-tower"
+  url "https://github.com/rafaelherik/azure-control-tower/archive/v0.0.1.tar.gz"
   sha256 ""
   license "MIT"
-  head "https://github.com/yourusername/azure-control-tower.git", branch: "main"
+  head "https://github.com/rafaelherik/azure-control-tower.git", branch: "main"
 
   depends_on "go" => :build
 

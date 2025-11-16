@@ -15,7 +15,7 @@ A tap is a custom Homebrew repository. This is the easiest and fastest way to di
 
 2. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/homebrew-azct.git
+   git clone https://github.com/rafaelherik/homebrew-azct.git
    cd homebrew-azct
    ```
 
@@ -30,11 +30,11 @@ A tap is a custom Homebrew repository. This is the easiest and fastest way to di
    ```ruby
    class Azct < Formula
      desc "Terminal-based UI for exploring and managing Azure resources"
-     homepage "https://github.com/yourusername/azure-control-tower"
-     url "https://github.com/yourusername/azure-control-tower/archive/v0.0.1.tar.gz"
+     homepage "https://github.com/rafaelherik/azure-control-tower"
+     url "https://github.com/rafaelherik/azure-control-tower/archive/v0.0.1.tar.gz"
      sha256 "YOUR_SHA256_HERE"
      license "MIT"
-     head "https://github.com/yourusername/azure-control-tower.git", branch: "main"
+     head "https://github.com/rafaelherik/azure-control-tower.git", branch: "main"
 
      depends_on "go" => :build
 
@@ -51,7 +51,7 @@ A tap is a custom Homebrew repository. This is the easiest and fastest way to di
 3. Calculate the SHA256 for the tarball:
    ```bash
    # Download the tarball first (or use the one from GitHub release)
-   curl -L https://github.com/yourusername/azure-control-tower/archive/v0.0.1.tar.gz -o azure-control-tower-0.0.1.tar.gz
+   curl -L https://github.com/rafaelherik/azure-control-tower/archive/v0.0.1.tar.gz -o azure-control-tower-0.0.1.tar.gz
    shasum -a 256 azure-control-tower-0.0.1.tar.gz
    ```
 
@@ -68,13 +68,13 @@ A tap is a custom Homebrew repository. This is the easiest and fastest way to di
 
 Users can now install with:
 ```bash
-brew tap yourusername/azct
+brew tap rafaelherik/azct
 brew install azct
 ```
 
 Or in one command:
 ```bash
-brew install yourusername/azct/azct
+brew install rafaelherik/azct/azct
 ```
 
 ### Step 4: Update README
@@ -84,7 +84,7 @@ Add installation instructions to your main repository README:
 ### Homebrew (macOS)
 
 ```bash
-brew tap yourusername/azct
+brew tap rafaelherik/azct
 brew install azct
 ```
 ```
@@ -191,7 +191,7 @@ You can always submit to homebrew-core later when:
 
 ```bash
 # From your azure-control-tower repository root
-export GITHUB_USER=yourusername
+export GITHUB_USER=rafaelherik
 export VERSION=0.0.1
 ./scripts/setup-homebrew-tap.sh
 ```
@@ -211,16 +211,16 @@ The script will:
 # Make it public, don't initialize with README
 
 # 2. Clone it
-git clone https://github.com/yourusername/homebrew-azct.git
+git clone https://github.com/rafaelherik/homebrew-azct.git
 cd homebrew-azct
 
 # 3. Copy formula
 cp ../azure-control-tower/Formula/azct.rb azct.rb
 
-# 4. Update URLs in azct.rb (replace yourusername)
+# 4. Update URLs in azct.rb (replace rafaelherik)
 
 # 5. Calculate SHA256
-curl -L https://github.com/yourusername/azure-control-tower/archive/v0.0.1.tar.gz -o /tmp/azure-control-tower-0.0.1.tar.gz
+curl -L https://github.com/rafaelherik/azure-control-tower/archive/v0.0.1.tar.gz -o /tmp/azure-control-tower-0.0.1.tar.gz
 shasum -a 256 /tmp/azure-control-tower-0.0.1.tar.gz
 # Update the SHA256 in azct.rb
 
@@ -230,7 +230,7 @@ git commit -m "Add azct formula v0.0.1"
 git push origin main
 
 # 7. Test installation
-brew tap yourusername/azct
+brew tap rafaelherik/azct
 brew install azct
 ```
 
@@ -242,13 +242,13 @@ After creating your tap, you can set up automated updates:
 
 2. **Add secret to main repository**: 
    - Go to Settings → Secrets → Actions
-   - Add secret: `HOMEBREW_TAP_REPO` = `yourusername/homebrew-azct`
+   - Add secret: `HOMEBREW_TAP_REPO` = `rafaelherik/homebrew-azct`
 
 3. **On each release**, the main repo will automatically trigger the tap to update
 
 Alternatively, you can manually trigger updates:
 ```bash
-gh api repos/yourusername/homebrew-azct/dispatches \
+gh api repos/rafaelherik/homebrew-azct/dispatches \
   --method POST \
   -f event_type=update-formula \
   -f client_payload='{"version":"0.0.2"}'

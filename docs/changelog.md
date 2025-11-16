@@ -33,5 +33,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - View detailed resource information
 - Modern terminal UI with tview
 
-[0.0.1]: https://github.com/yourusername/azure-control-tower/releases/tag/v0.0.1
+[0.0.1]: https://github.com/rafaelherik/azure-control-tower/releases/tag/v0.0.1
 

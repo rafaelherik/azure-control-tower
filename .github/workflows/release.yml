@@ -31,16 +31,16 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           # Linux
-          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-linux-amd64 ./cmd/azterm
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-linux-amd64 ./cmd/azct
           
           # macOS Intel
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-amd64 ./cmd/azterm
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-amd64 ./cmd/azct
           
           # macOS Apple Silicon
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-arm64 ./cmd/azterm
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-arm64 ./cmd/azct
           
           # Windows
-          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-windows-amd64.exe ./cmd/azterm
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-windows-amd64.exe ./cmd/azct
       
       - name: Create checksums
         run: |

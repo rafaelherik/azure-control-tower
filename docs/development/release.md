@@ -12,7 +12,7 @@
 - [ ] Set up Homebrew tap (see [Homebrew Guide](homebrew.md))
   - [ ] Create `homebrew-azct` repository on GitHub
   - [ ] Add formula to tap repository
-  - [ ] Test installation: `brew tap yourusername/azct && brew install azct`
+  - [ ] Test installation: `brew tap rafaelherik/azct && brew install azct`
 
 ## Release Steps
 
@@ -34,11 +34,11 @@
    - Update Homebrew tap (if not automated):
      ```bash
      # Use the setup script or manually update tap repository
-     export GITHUB_USER=yourusername
+     export GITHUB_USER=rafaelherik
      export VERSION=0.0.1
      ./scripts/setup-homebrew-tap.sh
      ```
-   - Test Homebrew installation: `brew tap yourusername/azct && brew install azct`
+   - Test Homebrew installation: `brew tap rafaelherik/azct && brew install azct`
 
 ## Post-Release
 

@@ -18,7 +18,7 @@ brew install azct
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/azure-control-tower.git
+   git clone https://github.com/rafaelherik/azure-control-tower.git
    cd azure-control-tower
    ```
 
@@ -35,7 +35,7 @@ brew install azct
 ## Go Install
 
 ```bash
-go install github.com/yourusername/azure-control-tower/cmd/azct@latest
+go install github.com/rafaelherik/azure-control-tower/cmd/azct@latest
 ```
 
 ## Verify Installation
