@@ -1,0 +1,51 @@
+# Binaries
+azct
+azct-*
+azterm
+azterm-*
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build directories
+dist/
+build/
+bin/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation build
+site/
+.mkdocs_cache/
+
+# Release artifacts
+*.tar.gz
+*.zip
+
+# Environment
+.env
+.env.local
+

@@ -1,0 +1,79 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      
+      - name: Get version
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION}"
+      
+      - name: Build binaries
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Linux
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-linux-amd64 ./cmd/azterm
+          
+          # macOS Intel
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-amd64 ./cmd/azterm
+          
+          # macOS Apple Silicon
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-darwin-arm64 ./cmd/azterm
+          
+          # Windows
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -X main.version=${VERSION}" -o azct-windows-amd64.exe ./cmd/azterm
+      
+      - name: Create checksums
+        run: |
+          sha256sum azct-linux-amd64 > azct-linux-amd64.sha256
+          sha256sum azct-darwin-amd64 > azct-darwin-amd64.sha256
+          sha256sum azct-darwin-arm64 > azct-darwin-arm64.sha256
+          sha256sum azct-windows-amd64.exe > azct-windows-amd64.exe.sha256
+      
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            azct-linux-amd64
+            azct-linux-amd64.sha256
+            azct-darwin-amd64
+            azct-darwin-amd64.sha256
+            azct-darwin-arm64
+            azct-darwin-arm64.sha256
+            azct-windows-amd64.exe
+            azct-windows-amd64.exe.sha256
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Trigger Homebrew tap update
+        if: env.TAP_REPO != ''
+        run: |
+          gh api repos/${{ env.TAP_REPO }}/dispatches \
+            --method POST \
+            -f event_type=update-formula \
+            -f client_payload='{"version":"${{ steps.version.outputs.version }}"}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAP_REPO: ${{ secrets.HOMEBREW_TAP_REPO }}
+

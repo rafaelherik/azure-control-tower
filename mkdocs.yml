@@ -1,0 +1,83 @@
+site_name: Azure Command Tower Documentation
+site_description: Terminal-based UI for exploring and managing Azure resources
+site_author: Azure Command Tower Contributors
+site_url: https://yourusername.github.io/azct
+
+repo_name: yourusername/azure-control-tower
+repo_url: https://github.com/yourusername/azure-control-tower
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+    - Authentication: getting-started/authentication.md
+  - User Guide:
+    - Navigation: user-guide/navigation.md
+    - Keyboard Shortcuts: user-guide/keyboard-shortcuts.md
+    - Filtering: user-guide/filtering.md
+    - Storage Explorer: user-guide/storage-explorer.md
+  - Development:
+    - Building: development/building.md
+    - Architecture: development/architecture.md
+    - Contributing: development/contributing.md
+    - Homebrew: development/homebrew.md
+    - Release Process: development/release.md
+  - API Reference:
+    - Overview: api-reference/overview.md
+  - Changelog: changelog.md
+
+plugins:
+  - search
+  - git-revision-date-localized
+
+extra:
+  version: 0.0.1
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/azure-control-tower
+

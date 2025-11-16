@@ -1,0 +1,74 @@
+# This workflow should be placed in your homebrew-azct tap repository
+# Copy this to: https://github.com/yourusername/homebrew-azct/.github/workflows/update-formula.yml
+
+name: Update Formula
+
+on:
+  repository_dispatch:
+    types: [update-formula]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update'
+        required: true
+
+jobs:
+  update:
+    name: Update Homebrew Formula
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup GitHub CLI
+        uses: cli/cli-action@v1
+        with:
+          version: latest
+      
+      - name: Get version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${{ github.event.client_payload.version }}"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION}"
+      
+      - name: Download tarball
+        run: |
+          curl -L "https://github.com/yourusername/azterm/archive/v${{ steps.version.outputs.version }}.tar.gz" -o /tmp/azterm-${{ steps.version.outputs.version }}.tar.gz
+      
+      - name: Calculate SHA256
+        id: sha256
+        run: |
+          SHA256=$(shasum -a 256 /tmp/azterm-${{ steps.version.outputs.version }}.tar.gz | cut -d' ' -f1)
+          echo "sha256=${SHA256}" >> $GITHUB_OUTPUT
+          echo "SHA256: ${SHA256}"
+      
+      - name: Update formula
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          SHA256="${{ steps.sha256.outputs.sha256 }}"
+          
+          # Update version
+          sed -i.bak "s|url \".*\"|url \"https://github.com/yourusername/azterm/archive/v${VERSION}.tar.gz\"|" azct.rb
+          
+          # Update SHA256
+          sed -i.bak "s|sha256 \".*\"|sha256 \"${SHA256}\"|" azct.rb
+          
+          # Update version in formula (if using version variable)
+          sed -i.bak "s|version \".*\"|version \"${VERSION}\"|" azct.rb || true
+          
+          rm azct.rb.bak
+      
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add azct.rb
+          git diff --staged --quiet || git commit -m "Update azct to v${{ steps.version.outputs.version }}"
+          git push
+
