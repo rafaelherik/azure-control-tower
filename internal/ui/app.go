@@ -17,13 +17,13 @@ import (
 // App wraps the tview application with navigation and state management
 type App struct {
 	*tview.Application
-	azureClient        *azure.Client
-	registry           *resource.Registry
-	navState           *navigation.State
-	headerView         *HeaderView
-	breadcrumbView     *BreadcrumbView
-	viewTitleView      *ViewTitleView
-	footerView         *FooterView
+	azureClient         *azure.Client
+	registry            *resource.Registry
+	navState            *navigation.State
+	headerView          *HeaderView
+	breadcrumbView      *BreadcrumbView
+	viewTitleView       *ViewTitleView
+	footerView          *FooterView
 	subscriptionsView   *SubscriptionsView
 	resourceGroupsView  *ResourceGroupsView
 	resourceTypesView   *ResourceTypesView
@@ -32,10 +32,10 @@ type App struct {
 	storageExplorerView *StorageExplorerView
 	blobsView           *BlobsView
 	menuView            *MenuView
-	filterMode         *FilterMode
-	mainFlex           *tview.Flex
-	currentView        tview.Primitive
-	userInfo           *models.UserInfo
+	filterMode          *FilterMode
+	mainFlex            *tview.Flex
+	currentView         tview.Primitive
+	userInfo            *models.UserInfo
 }
 
 // NewApp creates a new application instance
@@ -168,7 +168,6 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 			// Let details view handle its own keys
 			return event
 		}
-
 
 		// Handle key bindings for table views
 		if navState.CurrentView == navigation.ViewSubscriptions {
@@ -334,7 +333,7 @@ func (a *App) updateFooterForTableView(tableView *TableView) {
 	totalCount := len(tableView.data)
 	filteredCount := tableView.GetDataRowCount()
 	hasFilter := tableView.GetFilter() != ""
-	
+
 	// Get action keys based on current view
 	var actions string
 	switch a.navState.CurrentView {
@@ -363,7 +362,7 @@ func (a *App) updateFooterForTableView(tableView *TableView) {
 	default:
 		actions = "ESC: back, /: filter, q: quit"
 	}
-	
+
 	a.updateFooterWithActions(totalCount, filteredCount, hasFilter, actions)
 }
 
@@ -510,12 +509,12 @@ func (a *App) navigateBackFromDetails() {
 		a.Application.SetFocus(a.resourcesView)
 	} else if a.navState.CurrentView == navigation.ViewStorageExplorer {
 		a.Application.SetFocus(a.storageExplorerView)
-		} else if a.navState.CurrentView == navigation.ViewBlobs {
-			a.Application.SetFocus(a.blobsView)
-		} else if a.navState.CurrentView == navigation.ViewMenu {
-			a.Application.SetFocus(a.menuView)
-		}
+	} else if a.navState.CurrentView == navigation.ViewBlobs {
+		a.Application.SetFocus(a.blobsView)
+	} else if a.navState.CurrentView == navigation.ViewMenu {
+		a.Application.SetFocus(a.menuView)
 	}
+}
 
 // navigateToResourceTypes navigates to the resource types summary view for a resource group
 func (a *App) navigateToResourceTypes(resourceGroupName string) {

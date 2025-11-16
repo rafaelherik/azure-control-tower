@@ -2,6 +2,8 @@
 
 Azure Command Tower (azct) is a terminal-based UI for exploring and managing Azure resources. Navigate your Azure subscriptions, resource groups, and resources with an intuitive TUI interface.
 
+> **Note**: This project is inspired by [k9s](https://k9scli.io/), the popular Kubernetes terminal UI.
+
 ![Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![Go](https://img.shields.io/badge/go-1.23.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -27,19 +29,19 @@ Azure Command Tower (azct) is a terminal-based UI for exploring and managing Azu
 
 Install from tap:
 ```bash
-brew tap yourusername/azct
+brew tap rafaelherik/azct
 brew install azct
 ```
 
 Or in one command:
 ```bash
-brew install yourusername/azct/azct
+brew install rafaelherik/azct/azct
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/azure-control-tower.git
+git clone https://github.com/rafaelherik/azure-control-tower.git
 cd azure-control-tower
 go build -o azct ./cmd/azct
 sudo mv azct /usr/local/bin/
@@ -48,7 +50,7 @@ sudo mv azct /usr/local/bin/
 ### Go Install
 
 ```bash
-go install github.com/yourusername/azure-control-tower/cmd/azct@latest
+go install github.com/rafaelherik/azure-control-tower/cmd/azct@latest
 ```
 
 ## Quick Start
@@ -139,7 +141,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Documentation
 
-Full documentation is available at: [https://yourusername.github.io/azct](https://yourusername.github.io/azct)
+Full documentation is available at: [https://rafaelherik.github.io/azct](https://rafaelherik.github.io/azct)
 
 Or build locally:
 
@@ -154,6 +156,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
+- Inspired by [k9s](https://k9scli.io/) - the Kubernetes terminal UI
 - Built with [tview](https://github.com/rivo/tview) and [tcell](https://github.com/gdamore/tcell)
 - Uses [Azure SDK for Go](https://github.com/Azure/azure-sdk-for-go)
 
