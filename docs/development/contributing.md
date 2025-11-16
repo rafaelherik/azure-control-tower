@@ -2,6 +2,25 @@
 
 Thank you for your interest in contributing to Azure Command Tower!
 
+## Project Status
+
+Azure Command Tower is currently in **alpha stage**. This means:
+
+- **Core features are still being developed** - Some functionality may be incomplete or under active refinement
+- **Breaking changes may occur** - APIs and CLI interfaces might change between versions as we improve the design
+- **Your contributions are especially valuable** - Early feedback and contributions help shape the project's direction
+- **Focus areas for contribution**:
+  - Bug fixes and stability improvements
+  - Core functionality enhancements
+  - Documentation improvements
+  - Testing and test coverage
+  - Performance optimizations
+
+Please understand that during this alpha phase:
+- Some features may be partially implemented
+- Code structure and architecture may evolve
+- Your patience and constructive feedback are greatly appreciated
+
 ## Getting Started
 
 1. Fork the repository

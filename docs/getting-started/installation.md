@@ -1,5 +1,7 @@
 # Installation
 
+> **⚠️ Alpha Version Notice**: Azure Command Tower is in alpha development. Installation methods and binary names are subject to change as the project evolves.
+
 Azure Command Tower (azct) can be installed using several methods.
 
 ## Prerequisites
@@ -10,8 +12,17 @@ Azure Command Tower (azct) can be installed using several methods.
 
 ## Homebrew (macOS)
 
+First, add the tap:
+
 ```bash
+brew tap rafaelherik/azct
 brew install azct
+```
+
+Or install in one command:
+
+```bash
+brew install rafaelherik/azct/azct
 ```
 
 ## From Source

@@ -1,5 +1,13 @@
 # Azure Command Tower Documentation
 
+> **⚠️ Alpha Release Notice**
+>
+> Azure Command Tower is currently in **alpha stage**. This documentation reflects ongoing development:
+> - Some features may be incomplete or under active development
+> - Documentation may be updated frequently as features evolve
+> - Commands and interfaces are subject to change
+> - We appreciate your patience and feedback during this early phase
+
 Welcome to the Azure Command Tower documentation! Azure Command Tower (azct) is a terminal-based UI for exploring and managing Azure resources.
 
 ## What is Azure Command Tower?

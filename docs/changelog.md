@@ -5,7 +5,9 @@ All notable changes to Azure Command Tower will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.1] - 2024-XX-XX
+## [Unreleased] - Alpha Development
+
+> **Note**: This version is currently in alpha development and has not been officially released.
 
 ### Added
 - Initial release of Azure Command Tower
@@ -33,5 +35,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - View detailed resource information
 - Modern terminal UI with tview
 
-[0.0.1]: https://github.com/rafaelherik/azure-control-tower/releases/tag/v0.0.1
+[Unreleased]: https://github.com/rafaelherik/azure-control-tower/compare/v0.0.1...HEAD
 

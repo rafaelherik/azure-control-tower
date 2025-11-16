@@ -4,9 +4,21 @@ Azure Command Tower (azct) is a terminal-based UI for exploring and managing Azu
 
 > **Note**: This project is inspired by [k9s](https://k9scli.io/), the popular Kubernetes terminal UI.
 
+![Status](https://img.shields.io/badge/status-alpha-orange)
 ![Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![Go](https://img.shields.io/badge/go-1.23.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+> **⚠️ ALPHA SOFTWARE - ONGOING DEVELOPMENT**
+>
+> This project is in **early alpha stage** and under active development. Please be aware:
+> - Features may be incomplete or subject to change
+> - APIs and command-line interfaces may change between versions
+> - Bugs and unexpected behavior should be expected
+> - **Not recommended for production use**
+> - Your feedback and contributions are highly valued as we shape the project
+>
+> We're actively working on improving stability and adding features. Check the [changelog](docs/changelog.md) for updates.
 
 ## Features
 
@@ -146,7 +158,7 @@ Full documentation is available at: [https://rafaelherik.github.io/azure-control
 Or build locally:
 
 ```bash
-pip install mkdocs mkdocs-material
+pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin
 mkdocs serve
 ```
 
