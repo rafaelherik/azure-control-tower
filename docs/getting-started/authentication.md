@@ -55,3 +55,4 @@ If no subscriptions appear:
 1. Verify you have access to subscriptions: `az account list`
 2. Check if you need to set a default subscription: `az account set --subscription <subscription-id>`
 
+
