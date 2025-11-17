@@ -35,19 +35,12 @@ body:
       description: Have you considered any alternative solutions or workarounds?
       placeholder: What other approaches did you think about?
 
-  - type: dropdown
+  - type: textarea
     id: feature-area
     attributes:
       label: Feature Area
       description: Which area of azct does this feature relate to?
-      options:
-        - Navigation/UI
-        - Resource Management
-        - Storage Explorer
-        - Authentication
-        - Performance
-        - Documentation
-        - Other
+      placeholder: e.g., Navigation/UI, Resource Management, Storage Explorer, Authentication, Performance, Documentation, etc.
     validations:
       required: true
 
