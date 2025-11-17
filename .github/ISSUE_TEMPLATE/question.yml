@@ -1,0 +1,75 @@
+name: Question or Support
+description: Ask a question or get help using Azure Command Tower
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about Azure Command Tower? We're here to help!
+        
+        **Note**: For bug reports, please use the Bug Report template. For feature suggestions, use the Feature Request template.
+
+  - type: dropdown
+    id: question-type
+    attributes:
+      label: Question Type
+      description: What type of question do you have?
+      options:
+        - Installation/Setup
+        - Usage/How-to
+        - Configuration
+        - Azure Integration
+        - Performance
+        - General
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Ask your question here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide any relevant context about your environment or what you're trying to accomplish.
+      placeholder: |
+        - What are you trying to do?
+        - What have you tried so far?
+        - Any error messages or unexpected behavior?
+
+  - type: input
+    id: version
+    attributes:
+      label: Azure Command Tower Version
+      description: What version of azct are you using? (Run `azct --version` or check the UI)
+      placeholder: e.g., 0.0.1
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      placeholder: e.g., macOS 14.0, Ubuntu 22.04, Windows 11
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Add any other context, screenshots, or relevant information here.
+      placeholder: Any additional information that might be helpful...
+
+  - type: checkboxes
+    id: documentation-check
+    attributes:
+      label: Documentation
+      description: Before submitting, please check if the documentation already answers your question.
+      options:
+        - label: I have checked the [documentation](https://rafaelherik.github.io/azure-control-tower) and couldn't find an answer
+          required: true

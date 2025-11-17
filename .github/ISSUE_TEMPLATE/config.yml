@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://rafaelherik.github.io/azure-control-tower
+    about: Check out the full documentation for guides and references
+  - name: 💬 Discussions
+    url: https://github.com/rafaelherik/azure-control-tower/discussions
+    about: Ask questions and discuss ideas with the community
