@@ -145,11 +145,23 @@ go test ./...
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+#### Reporting Issues
+
+Found a bug or have a feature idea? Please use our issue templates:
+
+- **Bug Report**: Report bugs or unexpected behavior
+- **Feature Request**: Suggest new features or enhancements  
+- **Question**: Ask questions or get help
+
+#### Pull Requests
+
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+See our [Contributing Guide](docs/development/contributing.md) for more details.
 
 ## Documentation
 

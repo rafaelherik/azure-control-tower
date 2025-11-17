@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Breadcrumb navigation
 - Resource type menu
 - Azure CLI authentication integration
+- GitHub issue templates for standardized bug reports, feature requests, and questions
+- Updated contributing documentation with issue reporting guidelines
 
 ### Features
 - Browse Azure subscriptions

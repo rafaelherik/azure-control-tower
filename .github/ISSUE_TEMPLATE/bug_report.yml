@@ -1,0 +1,97 @@
+name: Bug Report
+description: Report a bug or unexpected behavior in Azure Command Tower
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us understand and fix the issue.
+        
+        **Note**: Azure Command Tower is currently in alpha stage. Some bugs are expected as we actively develop the project.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Tell us what went wrong...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Run 'azct'
+        2. Navigate to '...'
+        3. Press '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: What should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: What actually occurred?
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Logs
+      description: If applicable, add screenshots or paste relevant log output to help explain your problem.
+      placeholder: Paste screenshots or logs here...
+
+  - type: input
+    id: version
+    attributes:
+      label: Azure Command Tower Version
+      description: What version of azct are you running? (Run `azct --version` or check the UI)
+      placeholder: e.g., 0.0.1
+    validations:
+      required: true
+
+  - type: input
+    id: go-version
+    attributes:
+      label: Go Version
+      description: What version of Go is installed? (Run `go version`)
+      placeholder: e.g., go1.23.0
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      placeholder: e.g., macOS 14.0, Ubuntu 22.04, Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: azure-cli
+    attributes:
+      label: Azure CLI Version
+      description: What version of Azure CLI are you using? (Run `az version`)
+      placeholder: e.g., 2.65.0
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here.
+      placeholder: Any additional information that might be helpful...
