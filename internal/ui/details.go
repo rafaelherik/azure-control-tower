@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"azure-control-tower/internal/models"
 	"azure-control-tower/pkg/resource"
@@ -170,6 +171,131 @@ func (dv *DetailsView) ShowBlobDetails(blob *models.Blob, storageAccountName, co
 		}
 	} else {
 		content.WriteString("\n[lightblue::b]Metadata:[white] None\n")
+	}
+
+	dv.SetText(content.String())
+}
+
+// ShowSecretDetails shows details for a Key Vault secret
+func (dv *DetailsView) ShowSecretDetails(secret *models.Secret, keyVaultName string) {
+	var content strings.Builder
+	content.WriteString("[lightblue::b]Secret Details[white]\n\n")
+	content.WriteString(fmt.Sprintf("[lightblue::b]Key Vault:[white] %s\n", keyVaultName))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Name:[white] %s\n", secret.Name))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Enabled:[white] %v\n", secret.Enabled))
+	
+	if secret.ContentType != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Content Type:[white] %s\n", secret.ContentType))
+	}
+	
+	if secret.Created != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Created:[white] %s\n", secret.Created.Format("2006-01-02 15:04:05")))
+	}
+	if secret.Updated != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Updated:[white] %s\n", secret.Updated.Format("2006-01-02 15:04:05")))
+	}
+	if secret.Expires != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Expires:[white] %s\n", secret.Expires.Format("2006-01-02 15:04:05")))
+	}
+	if secret.NotBefore != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Not Before:[white] %s\n", secret.NotBefore.Format("2006-01-02 15:04:05")))
+	}
+
+	if len(secret.Tags) > 0 {
+		content.WriteString("\n[lightblue::b]Tags:[white]\n")
+		for key, value := range secret.Tags {
+			content.WriteString(fmt.Sprintf("  [lightblue::b]%s:[white] %s\n", key, value))
+		}
+	} else {
+		content.WriteString("\n[lightblue::b]Tags:[white] None\n")
+	}
+
+	dv.SetText(content.String())
+}
+
+// ShowKeyDetails shows details for a Key Vault key
+func (dv *DetailsView) ShowKeyDetails(key *models.Key, keyVaultName string) {
+	var content strings.Builder
+	content.WriteString("[lightblue::b]Key Details[white]\n\n")
+	content.WriteString(fmt.Sprintf("[lightblue::b]Key Vault:[white] %s\n", keyVaultName))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Name:[white] %s\n", key.Name))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Type:[white] %s\n", key.KeyType))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Enabled:[white] %v\n", key.Enabled))
+	
+	if key.Version != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Version:[white] %s\n", key.Version))
+	}
+	
+	if key.Created != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Created:[white] %s\n", key.Created.Format("2006-01-02 15:04:05")))
+	}
+	if key.Updated != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Updated:[white] %s\n", key.Updated.Format("2006-01-02 15:04:05")))
+	}
+	if key.Expires != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Expires:[white] %s\n", key.Expires.Format("2006-01-02 15:04:05")))
+	}
+	if key.NotBefore != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Not Before:[white] %s\n", key.NotBefore.Format("2006-01-02 15:04:05")))
+	}
+
+	if len(key.Tags) > 0 {
+		content.WriteString("\n[lightblue::b]Tags:[white]\n")
+		for key, value := range key.Tags {
+			content.WriteString(fmt.Sprintf("  [lightblue::b]%s:[white] %s\n", key, value))
+		}
+	} else {
+		content.WriteString("\n[lightblue::b]Tags:[white] None\n")
+	}
+
+	dv.SetText(content.String())
+}
+
+// ShowCertificateDetails shows details for a Key Vault certificate
+func (dv *DetailsView) ShowCertificateDetails(cert *models.Certificate, keyVaultName string) {
+	var content strings.Builder
+	content.WriteString("[lightblue::b]Certificate Details[white]\n\n")
+	content.WriteString(fmt.Sprintf("[lightblue::b]Key Vault:[white] %s\n", keyVaultName))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Name:[white] %s\n", cert.Name))
+	content.WriteString(fmt.Sprintf("[lightblue::b]Enabled:[white] %v\n", cert.Enabled))
+	
+	if cert.Subject != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Subject:[white] %s\n", cert.Subject))
+	}
+	if cert.Issuer != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Issuer:[white] %s\n", cert.Issuer))
+	}
+	if cert.Thumbprint != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Thumbprint:[white] %s\n", cert.Thumbprint))
+	}
+	if cert.Version != "" {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Version:[white] %s\n", cert.Version))
+	}
+	
+	if cert.Created != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Created:[white] %s\n", cert.Created.Format("2006-01-02 15:04:05")))
+	}
+	if cert.Updated != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Updated:[white] %s\n", cert.Updated.Format("2006-01-02 15:04:05")))
+	}
+	if cert.Expires != nil {
+		expiresStr := cert.Expires.Format("2006-01-02 15:04:05")
+		if cert.Expires.Before(time.Now()) {
+			expiresStr += " ⚠️ EXPIRED"
+		}
+		content.WriteString(fmt.Sprintf("[lightblue::b]Expires:[white] %s\n", expiresStr))
+	}
+	if cert.NotBefore != nil {
+		content.WriteString(fmt.Sprintf("[lightblue::b]Not Before:[white] %s\n", cert.NotBefore.Format("2006-01-02 15:04:05")))
+	}
+
+	if len(cert.Tags) > 0 {
+		content.WriteString("\n[lightblue::b]Tags:[white]\n")
+		for key, value := range cert.Tags {
+			content.WriteString(fmt.Sprintf("  [lightblue::b]%s:[white] %s\n", key, value))
+		}
+	} else {
+		content.WriteString("\n[lightblue::b]Tags:[white] None\n")
 	}
 
 	dv.SetText(content.String())
