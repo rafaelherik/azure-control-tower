@@ -12,13 +12,9 @@
         <meta name="author" content="Azure Command Tower Contributors">
       
       
-        <link rel="canonical" href="https://rafaelherik.github.io/azure-control-tower/user-guide/storage-explorer/">
+        <link rel="canonical" href="https://rafaelherik.github.io/azure-control-tower/user-guide/keyvault-explorer/">
       
       
-        <link rel="prev" href="../filtering/">
-      
-      
-        <link rel="next" href="../../development/building/">
       
       
         
@@ -29,7 +25,7 @@
     
     
       
-        <title>Storage Explorer - Azure Command Tower Documentation</title>
+        <title>Key Vault Explorer - Azure Command Tower Documentation</title>
       
     
     
@@ -80,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#storage-explorer" class="md-skip">
+        <a href="#key-vault-explorer" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Storage Explorer
+              Key Vault Explorer
             
           </span>
         </div>
@@ -268,12 +264,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../navigation/" class="md-tabs__link">
           
   
@@ -566,31 +560,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -608,7 +599,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -707,37 +698,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Storage Explorer
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../storage-explorer/" class="md-nav__link">
         
   
   
@@ -753,131 +717,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#accessing-storage-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Accessing Storage Explorer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Features
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#container-view" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Container View
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#blob-view" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Blob View
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#blob-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Blob Details
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#folder-navigation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Folder Navigation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#filtering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Filtering
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Cases
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tips" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tips
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1234,10 +1073,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#accessing-storage-explorer" class="md-nav__link">
+  <a href="#accessing-key-vault-explorer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Accessing Storage Explorer
+        Accessing Key Vault Explorer
       
     </span>
   </a>
@@ -1257,10 +1096,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#container-view" class="md-nav__link">
+  <a href="#key-vault-explorer-view" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container View
+        Key Vault Explorer View
       
     </span>
   </a>
@@ -1268,10 +1107,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#blob-view" class="md-nav__link">
+  <a href="#secrets-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Blob View
+        Secrets Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secrets Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Secrets
       
     </span>
   </a>
@@ -1279,10 +1130,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#blob-details" class="md-nav__link">
+  <a href="#viewing-secret-values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Blob Details
+        Viewing Secret Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secret-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Details
       
     </span>
   </a>
@@ -1293,12 +1155,95 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#folder-navigation" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#keys-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Folder Navigation
+        Keys Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keys Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificates-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificates Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Certificates Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Certificates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificate Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#navigation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Navigation Flow
       
     </span>
   </a>
@@ -1317,6 +1262,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#keyboard-shortcuts-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyboard Shortcuts Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keyboard Shortcuts Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-vault-explorer_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Vault Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secrets-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secrets View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificates-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificates View
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#use-cases" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1328,6 +1334,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secret-value-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Value Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tips" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1335,6 +1380,56 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#viewing-a-secret-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewing a Secret Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-certificate-expiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking Certificate Expiration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-a-specific-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finding a Specific Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1358,66 +1453,325 @@
   
 
 
-<h1 id="storage-explorer">Storage Explorer</h1>
-<p>Azure Command Tower includes a built-in storage explorer for browsing Azure Storage accounts, containers, and blobs.</p>
-<h2 id="accessing-storage-explorer">Accessing Storage Explorer</h2>
+<h1 id="key-vault-explorer">Key Vault Explorer</h1>
+<p>Azure Command Tower includes comprehensive support for browsing and managing Azure Key Vault resources, including secrets, keys, and certificates.</p>
+<h2 id="accessing-key-vault-explorer">Accessing Key Vault Explorer</h2>
 <ol>
-<li>Navigate to a storage account resource</li>
-<li>Press <code>e</code> to explore the storage account</li>
-<li>You'll see the Storage Explorer view with all containers</li>
+<li>Navigate to a Key Vault resource in your resource group</li>
+<li>Press <code>e</code> to explore the Key Vault</li>
+<li>You'll see the Key Vault Explorer view with three main categories</li>
 </ol>
 <h2 id="features">Features</h2>
-<h3 id="container-view">Container View</h3>
-<p>The Storage Explorer shows:
-- Container names
-- Container properties (public access level, etc.)
-- Last modified dates</p>
+<h3 id="key-vault-explorer-view">Key Vault Explorer View</h3>
+<p>The Key Vault Explorer provides access to three main item types:</p>
+<ul>
+<li><strong>🔐 Secrets</strong>: Manage secret values and configurations</li>
+<li><strong>🔑 Keys</strong>: Manage cryptographic keys</li>
+<li><strong>📜 Certificates</strong>: Manage SSL/TLS certificates</li>
+</ul>
 <p><strong>Actions:</strong>
-- <code>Enter</code>: Open container to view blobs
-- <code>d</code>: View container details
-- <code>/</code>: Filter containers</p>
-<h3 id="blob-view">Blob View</h3>
-<p>When you open a container, you'll see:
-- Blobs and folders
-- Blob sizes
-- Last modified dates
-- Content types</p>
-<p><strong>Navigation:</strong>
-- Folders can be navigated like a file system
-- Press <code>Enter</code> on a folder to navigate into it
-- Press <code>ESC</code> to go back to parent folder or container list</p>
-<h3 id="blob-details">Blob Details</h3>
-<p>View detailed information about blobs:
-- Full path
-- Size
+- <code>Enter</code>: Open the selected item type to view its contents
+- <code>ESC</code>: Go back to resource list
+- <code>/</code>: Filter items</p>
+<h3 id="secrets-management">Secrets Management</h3>
+<h4 id="listing-secrets">Listing Secrets</h4>
+<p>The secrets view displays:
+- Secret names
+- Enabled status (✓ or ✗)
 - Content type
-- Last modified
-- ETag
-- Metadata</p>
-<h2 id="folder-navigation">Folder Navigation</h2>
-<p>The blob view supports hierarchical folder navigation:
-- Navigate into folders with <code>Enter</code>
-- Use <code>ESC</code> to go back to parent folder
-- The breadcrumb shows your current path</p>
+- Last updated date</p>
+<p><strong>Actions:</strong>
+- <code>v</code>: View secret value (requires confirmation)
+- <code>d</code>: View secret details
+- <code>Enter</code>: View secret details
+- <code>ESC</code>: Go back to Key Vault Explorer
+- <code>/</code>: Filter secrets</p>
+<h4 id="viewing-secret-values">Viewing Secret Values</h4>
+<p>When you press <code>v</code> to view a secret value:</p>
+<ol>
+<li>
+<p>A security confirmation dialog appears:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Are you sure you want to view the value of secret &#39;my-secret&#39;?
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>⚠️ This will display sensitive information on screen.
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>[View]  [Cancel]
+</code></pre></div></p>
+</li>
+<li>
+<p>Select "View" to fetch and display the secret value</p>
+</li>
+<li>The value is displayed in a modal window</li>
+<li>Press any key to close and return to the secrets list</li>
+</ol>
+<p><strong>Security Note</strong>: Secret values are only fetched when explicitly requested and are not cached.</p>
+<h4 id="secret-details">Secret Details</h4>
+<p>Secret details include:
+- Key Vault name
+- Secret name
+- Enabled status
+- Content type
+- Creation date
+- Last updated date
+- Expiration date (if set)
+- Not before date (if set)
+- Tags (if any)</p>
+<h3 id="keys-management">Keys Management</h3>
+<h4 id="listing-keys">Listing Keys</h4>
+<p>The keys view displays:
+- Key names
+- Key types (RSA, EC, etc.)
+- Enabled status (✓ or ✗)
+- Last updated date</p>
+<p><strong>Actions:</strong>
+- <code>d</code>: View key details
+- <code>Enter</code>: View key details
+- <code>ESC</code>: Go back to Key Vault Explorer
+- <code>/</code>: Filter keys</p>
+<h4 id="key-details">Key Details</h4>
+<p>Key details include:
+- Key Vault name
+- Key name
+- Key type (RSA, RSA-HSM, EC, EC-HSM, etc.)
+- Version
+- Enabled status
+- Creation date
+- Last updated date
+- Expiration date (if set)
+- Not before date (if set)
+- Tags (if any)</p>
+<h3 id="certificates-management">Certificates Management</h3>
+<h4 id="listing-certificates">Listing Certificates</h4>
+<p>The certificates view displays:
+- Certificate names
+- Enabled status (✓ or ✗)
+- Expiration dates with visual warnings
+- Last updated date</p>
+<p><strong>Visual Indicators:</strong>
+- <code>⚠️ 2024-01-15 (EXPIRED)</code>: Shows expired certificates with warning icon</p>
+<p><strong>Actions:</strong>
+- <code>d</code>: View certificate details
+- <code>Enter</code>: View certificate details
+- <code>ESC</code>: Go back to Key Vault Explorer
+- <code>/</code>: Filter certificates</p>
+<h4 id="certificate-details">Certificate Details</h4>
+<p>Certificate details include:
+- Key Vault name
+- Certificate name
+- Subject (DN)
+- Issuer
+- Thumbprint
+- Version
+- Enabled status
+- Creation date
+- Last updated date
+- Expiration date with expiration warning
+- Not before date (if set)
+- Tags (if any)</p>
+<h2 id="navigation-flow">Navigation Flow</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Resource Groups
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  └─&gt; Key Vaults (filtered list)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        └─&gt; Key Vault Explorer
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>              ├─&gt; Secrets
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>              │     ├─&gt; Secret Details
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>              │     └─&gt; View Secret Value (with confirmation)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>              ├─&gt; Keys
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>              │     └─&gt; Key Details
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>              └─&gt; Certificates
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                    └─&gt; Certificate Details
+</code></pre></div>
 <h2 id="filtering">Filtering</h2>
-<p>Filter containers and blobs just like other views:
+<p>Filter works across all Key Vault views:
 - Press <code>/</code> to activate filter
 - Type to search by name
-- Filter is case-insensitive</p>
+- Filter is case-insensitive
+- Works in Key Vault list, secrets, keys, and certificates views</p>
+<h2 id="keyboard-shortcuts-summary">Keyboard Shortcuts Summary</h2>
+<h3 id="key-vault-explorer_1">Key Vault Explorer</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enter</code></td>
+<td>Open item type (secrets/keys/certificates)</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>Go back to resource list</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Filter items</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>Quit application</td>
+</tr>
+</tbody>
+</table>
+<h3 id="secrets-view">Secrets View</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td>View secret value (with confirmation)</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>View secret details</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>View secret details</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>Go back to Key Vault Explorer</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Filter secrets</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>Quit application</td>
+</tr>
+</tbody>
+</table>
+<h3 id="keys-view">Keys View</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>View key details</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>View key details</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>Go back to Key Vault Explorer</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Filter keys</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>Quit application</td>
+</tr>
+</tbody>
+</table>
+<h3 id="certificates-view">Certificates View</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>View certificate details</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>View certificate details</td>
+</tr>
+<tr>
+<td><code>ESC</code></td>
+<td>Go back to Key Vault Explorer</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Filter certificates</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>Quit application</td>
+</tr>
+</tbody>
+</table>
 <h2 id="use-cases">Use Cases</h2>
 <ul>
-<li><strong>Quick File Access</strong>: Browse and find files in storage accounts</li>
-<li><strong>Container Management</strong>: View all containers in a storage account</li>
-<li><strong>Blob Inspection</strong>: Check blob properties and metadata</li>
-<li><strong>Folder Navigation</strong>: Navigate through blob storage like a file system</li>
+<li><strong>Secret Management</strong>: Browse and view secrets stored in Key Vaults</li>
+<li><strong>Security Auditing</strong>: Check which secrets, keys, and certificates are enabled/disabled</li>
+<li><strong>Expiration Monitoring</strong>: Identify expired or soon-to-expire certificates</li>
+<li><strong>Quick Access</strong>: Quickly view secret values when needed during troubleshooting</li>
+<li><strong>Inventory Review</strong>: List all cryptographic assets in a Key Vault</li>
 </ul>
+<h2 id="security-considerations">Security Considerations</h2>
+<h3 id="secret-value-protection">Secret Value Protection</h3>
+<ul>
+<li>Secret values are never displayed without explicit user confirmation</li>
+<li>A security warning is shown before displaying sensitive information</li>
+<li>Secret values are fetched on-demand and not cached</li>
+<li>Use the <code>v</code> key only when you need to view the actual secret value</li>
+</ul>
+<h3 id="access-requirements">Access Requirements</h3>
+<p>To use Key Vault Explorer, you need:
+- <strong>List permissions</strong> on the Key Vault to see items
+- <strong>Get permissions</strong> on secrets/keys/certificates to view their values
+- Proper Azure RBAC roles (e.g., "Key Vault Secrets User", "Key Vault Reader")</p>
+<p>If you lack permissions, operations will fail with an error message.</p>
 <h2 id="tips">Tips</h2>
 <ul>
-<li>Use the breadcrumb to see your current path in blob storage</li>
-<li>Filter is useful for finding specific blobs in large containers</li>
-<li>Container details show public access configuration</li>
-<li>Blob details include all metadata and properties</li>
+<li><strong>Use filtering</strong> to quickly find specific secrets, keys, or certificates in large vaults</li>
+<li><strong>Check expiration dates</strong> regularly to avoid expired certificates causing outages</li>
+<li><strong>Review enabled status</strong> to ensure only necessary items are active</li>
+<li><strong>Confirm secret values carefully</strong> before viewing to avoid accidental exposure</li>
+<li><strong>Use breadcrumb navigation</strong> to track your current location in the Key Vault hierarchy</li>
+<li><strong>Look for visual warnings</strong> (⚠️) on expired certificates</li>
 </ul>
+<h2 id="common-operations">Common Operations</h2>
+<h3 id="viewing-a-secret-value">Viewing a Secret Value</h3>
+<ol>
+<li>Navigate to Key Vaults in your resource group</li>
+<li>Select a Key Vault and press <code>e</code></li>
+<li>Select "Secrets" and press <code>Enter</code></li>
+<li>Navigate to the desired secret</li>
+<li>Press <code>v</code> to view the value</li>
+<li>Confirm by selecting "View"</li>
+<li>The secret value is displayed</li>
+<li>Press any key to close</li>
+</ol>
+<h3 id="checking-certificate-expiration">Checking Certificate Expiration</h3>
+<ol>
+<li>Navigate to Key Vaults in your resource group</li>
+<li>Select a Key Vault and press <code>e</code></li>
+<li>Select "Certificates" and press <code>Enter</code></li>
+<li>Review the expiration dates column</li>
+<li>Look for the ⚠️ warning icon for expired certificates</li>
+<li>Press <code>d</code> or <code>Enter</code> on any certificate to see full details</li>
+</ol>
+<h3 id="finding-a-specific-key">Finding a Specific Key</h3>
+<ol>
+<li>Navigate to Key Vaults in your resource group</li>
+<li>Select a Key Vault and press <code>e</code></li>
+<li>Select "Keys" and press <code>Enter</code></li>
+<li>Press <code>/</code> to activate filter</li>
+<li>Type the key name (or part of it)</li>
+<li>Press <code>Enter</code> on the found key to see details</li>
+</ol>
 
 
 
