@@ -407,7 +407,12 @@ func (c *Client) GetCertificateDetails(ctx context.Context, vaultURL, certName s
 	// Get thumbprint from CER
 	if resp.CER != nil {
 		// Calculate thumbprint from certificate data
-		cert.Thumbprint = fmt.Sprintf("%x", resp.CER)[:40] // First 40 chars (SHA1)
+		formatted := fmt.Sprintf("%x", resp.CER)
+		if len(formatted) > 40 {
+			cert.Thumbprint = formatted[:40]
+		} else {
+			cert.Thumbprint = formatted
+		}
 	}
 
 	if resp.Tags != nil {

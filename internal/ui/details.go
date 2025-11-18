@@ -241,8 +241,8 @@ func (dv *DetailsView) ShowKeyDetails(key *models.Key, keyVaultName string) {
 
 	if len(key.Tags) > 0 {
 		content.WriteString("\n[lightblue::b]Tags:[white]\n")
-		for key, value := range key.Tags {
-			content.WriteString(fmt.Sprintf("  [lightblue::b]%s:[white] %s\n", key, value))
+		for tagKey, value := range key.Tags {
+			content.WriteString(fmt.Sprintf("  [lightblue::b]%s:[white] %s\n", tagKey, value))
 		}
 	} else {
 		content.WriteString("\n[lightblue::b]Tags:[white] None\n")

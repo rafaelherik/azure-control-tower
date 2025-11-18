@@ -145,7 +145,7 @@ func TestSecretNameExtraction(t *testing.T) {
 			name:        "Secret ID with version",
 			secretID:    "secrets/my-secret/version123",
 			expected:    "version123",
-			description: "Extract version from versioned secret ID",
+			description: "Extract last path segment (version) from versioned secret ID",
 		},
 		{
 			name:        "Secret with single part",
@@ -203,7 +203,7 @@ func TestKeyNameExtraction(t *testing.T) {
 			name:        "Key ID with version",
 			keyID:       "keys/my-key/version456",
 			expected:    "version456",
-			description: "Extract version from versioned key ID",
+			description: "Extract last path segment (version) from versioned key ID",
 		},
 		{
 			name:        "Key with single part",
@@ -255,7 +255,7 @@ func TestCertificateNameExtraction(t *testing.T) {
 			name:        "Certificate ID with version",
 			certID:      "certificates/my-cert/version789",
 			expected:    "version789",
-			description: "Extract version from versioned certificate ID",
+			description: "Extract last path segment (version) from versioned certificate ID",
 		},
 		{
 			name:        "SSL certificate",
