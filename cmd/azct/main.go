@@ -39,6 +39,10 @@ func main() {
 	storageHandler := resource.NewStorageHandler()
 	registry.RegisterHandler(storageHandler)
 
+	// Register Key Vault handler
+	keyVaultHandler := resource.NewKeyVaultHandler()
+	registry.RegisterHandler(keyVaultHandler)
+
 	// Create and start UI application
 	app := ui.NewApp(azureClient, registry)
 	if err := app.Start(ctx); err != nil {
