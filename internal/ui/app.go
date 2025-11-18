@@ -28,10 +28,14 @@ type App struct {
 	resourceGroupsView  *ResourceGroupsView
 	resourceTypesView   *ResourceTypesView
 	resourcesView       *ResourcesView
-	detailsView         *DetailsView
-	storageExplorerView *StorageExplorerView
-	blobsView           *BlobsView
-	menuView            *MenuView
+	detailsView               *DetailsView
+	storageExplorerView       *StorageExplorerView
+	blobsView                 *BlobsView
+	keyVaultExplorerView      *KeyVaultExplorerView
+	keyVaultSecretsView       *KeyVaultSecretsView
+	keyVaultKeysView          *KeyVaultKeysView
+	keyVaultCertificatesView  *KeyVaultCertificatesView
+	menuView                  *MenuView
 	filterMode          *FilterMode
 	mainFlex            *tview.Flex
 	currentView         tview.Primitive
@@ -54,6 +58,10 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 	detailsView := NewDetailsView(registry)
 	storageExplorerView := NewStorageExplorerView()
 	blobsView := NewBlobsView()
+	keyVaultExplorerView := NewKeyVaultExplorerView()
+	keyVaultSecretsView := NewKeyVaultSecretsView()
+	keyVaultKeysView := NewKeyVaultKeysView()
+	keyVaultCertificatesView := NewKeyVaultCertificatesView()
 	menuView := NewMenuView(registry)
 	filterMode := NewFilterMode(app)
 
@@ -73,10 +81,14 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 		resourceGroupsView:  resourceGroupsView,
 		resourceTypesView:   resourceTypesView,
 		resourcesView:       resourcesView,
-		detailsView:         detailsView,
-		storageExplorerView: storageExplorerView,
-		blobsView:           blobsView,
-		menuView:            menuView,
+		detailsView:              detailsView,
+		storageExplorerView:      storageExplorerView,
+		blobsView:                blobsView,
+		keyVaultExplorerView:     keyVaultExplorerView,
+		keyVaultSecretsView:      keyVaultSecretsView,
+		keyVaultKeysView:         keyVaultKeysView,
+		keyVaultCertificatesView: keyVaultCertificatesView,
+		menuView:                 menuView,
 		filterMode:          filterMode,
 		mainFlex:            mainFlex,
 		currentView:         subscriptionsView,
@@ -117,7 +129,21 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 		a.showResourceDetails(resource)
 	})
 	resourcesView.SetOnExploreStorage(func(resource *models.Resource) {
-		a.navigateToStorageExplorer(resource)
+		// Route to appropriate explorer based on resource type
+		switch resource.Type {
+		case "Microsoft.Storage/storageAccounts":
+			a.navigateToStorageExplorer(resource)
+		case "Microsoft.KeyVault/vaults":
+			a.navigateToKeyVaultExplorer(resource)
+		default:
+			// Try to determine if it's an explorable resource type
+			handler := registry.GetHandlerOrDefault(resource.Type)
+			if handler != nil && handler.CanExplore() {
+				// For now, just navigate to storage explorer as fallback
+				// In the future, we can add more handlers
+				a.navigateToStorageExplorer(resource)
+			}
+		}
 	})
 
 	// Set up storage explorer view callbacks
@@ -134,6 +160,29 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 	})
 	blobsView.SetOnNavigateFolder(func(folderPath string) {
 		a.navigateIntoBlobFolder(folderPath)
+	})
+
+	// Set up Key Vault explorer view callbacks
+	keyVaultExplorerView.SetOnSelect(func(itemType string) {
+		a.navigateToKeyVaultItemType(itemType)
+	})
+
+	// Set up Key Vault secrets view callbacks
+	keyVaultSecretsView.SetOnShowDetails(func(secret *models.Secret) {
+		a.showSecretDetails(secret)
+	})
+	keyVaultSecretsView.SetOnViewValue(func(secret *models.Secret) {
+		a.viewSecretValue(secret)
+	})
+
+	// Set up Key Vault keys view callbacks
+	keyVaultKeysView.SetOnShowDetails(func(key *models.Key) {
+		a.showKeyDetails(key)
+	})
+
+	// Set up Key Vault certificates view callbacks
+	keyVaultCertificatesView.SetOnShowDetails(func(cert *models.Certificate) {
+		a.showCertificateDetails(cert)
 	})
 
 	// Set up details view callback
@@ -199,6 +248,22 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 			if handled := blobsView.HandleKey(event); handled != event {
 				return handled
 			}
+		case navigation.ViewKeyVaultExplorer:
+			if handled := keyVaultExplorerView.HandleKey(event); handled != event {
+				return handled
+			}
+		case navigation.ViewKeyVaultSecrets:
+			if handled := keyVaultSecretsView.HandleKey(event); handled != event {
+				return handled
+			}
+		case navigation.ViewKeyVaultKeys:
+			if handled := keyVaultKeysView.HandleKey(event); handled != event {
+				return handled
+			}
+		case navigation.ViewKeyVaultCertificates:
+			if handled := keyVaultCertificatesView.HandleKey(event); handled != event {
+				return handled
+			}
 		case navigation.ViewMenu:
 			if handled := menuView.HandleKey(event); handled != event {
 				return handled
@@ -215,6 +280,14 @@ func NewApp(azureClient *azure.Client, registry *resource.Registry) *App {
 			case navigation.ViewBlobs:
 				// Go back to storage explorer
 				a.navigateBackFromBlobs()
+				return nil
+			case navigation.ViewKeyVaultSecrets, navigation.ViewKeyVaultKeys, navigation.ViewKeyVaultCertificates:
+				// Go back to Key Vault explorer
+				a.navigateBackToKeyVaultExplorer()
+				return nil
+			case navigation.ViewKeyVaultExplorer:
+				// Go back to resource type view
+				a.navigateBackToResourceType()
 				return nil
 			case navigation.ViewStorageExplorer:
 				// Go back to resource type view
@@ -318,6 +391,22 @@ func (a *App) updateLayout() {
 		a.mainFlex.AddItem(a.blobsView, 0, 1, true)
 		a.currentView = a.blobsView
 		a.updateFooterForTableView(a.blobsView.TableView)
+	} else if a.navState.CurrentView == navigation.ViewKeyVaultExplorer {
+		a.mainFlex.AddItem(a.keyVaultExplorerView, 0, 1, true)
+		a.currentView = a.keyVaultExplorerView
+		a.updateFooterForTableView(a.keyVaultExplorerView.TableView)
+	} else if a.navState.CurrentView == navigation.ViewKeyVaultSecrets {
+		a.mainFlex.AddItem(a.keyVaultSecretsView, 0, 1, true)
+		a.currentView = a.keyVaultSecretsView
+		a.updateFooterForTableView(a.keyVaultSecretsView.TableView)
+	} else if a.navState.CurrentView == navigation.ViewKeyVaultKeys {
+		a.mainFlex.AddItem(a.keyVaultKeysView, 0, 1, true)
+		a.currentView = a.keyVaultKeysView
+		a.updateFooterForTableView(a.keyVaultKeysView.TableView)
+	} else if a.navState.CurrentView == navigation.ViewKeyVaultCertificates {
+		a.mainFlex.AddItem(a.keyVaultCertificatesView, 0, 1, true)
+		a.currentView = a.keyVaultCertificatesView
+		a.updateFooterForTableView(a.keyVaultCertificatesView.TableView)
 	} else if a.navState.CurrentView == navigation.ViewMenu {
 		a.mainFlex.AddItem(a.menuView, 0, 1, true)
 		a.currentView = a.menuView
@@ -359,6 +448,14 @@ func (a *App) updateFooterForTableView(tableView *TableView) {
 		actions = "Enter: open container, d: details, ESC: back, /: filter, q: quit"
 	case navigation.ViewBlobs:
 		actions = "Enter: open folder/details, d: details, ESC: back, /: filter, q: quit"
+	case navigation.ViewKeyVaultExplorer:
+		actions = "Enter: open item type, ESC: back, /: filter, q: quit"
+	case navigation.ViewKeyVaultSecrets:
+		actions = "v: view value, d: details, ESC: back, /: filter, q: quit"
+	case navigation.ViewKeyVaultKeys:
+		actions = "d: details, ESC: back, /: filter, q: quit"
+	case navigation.ViewKeyVaultCertificates:
+		actions = "d: details, ESC: back, /: filter, q: quit"
 	case navigation.ViewMenu:
 		actions = "Enter: select resource type, ESC: back, /: filter, q: quit"
 	default:
@@ -401,6 +498,14 @@ func (a *App) updateViewTitle() {
 			pathDisplay = fmt.Sprintf(" - %s", a.navState.BlobPathPrefix)
 		}
 		viewName = fmt.Sprintf("Blobs - %s/%s%s", a.navState.SelectedStorageAccount, a.navState.SelectedContainer, pathDisplay)
+	case navigation.ViewKeyVaultExplorer:
+		viewName = fmt.Sprintf("Key Vault Explorer - %s", a.navState.SelectedKeyVault)
+	case navigation.ViewKeyVaultSecrets:
+		viewName = fmt.Sprintf("Secrets - %s", a.navState.SelectedKeyVault)
+	case navigation.ViewKeyVaultKeys:
+		viewName = fmt.Sprintf("Keys - %s", a.navState.SelectedKeyVault)
+	case navigation.ViewKeyVaultCertificates:
+		viewName = fmt.Sprintf("Certificates - %s", a.navState.SelectedKeyVault)
 	case navigation.ViewMenu:
 		viewName = "Resource Types Menu"
 	default:
@@ -509,6 +614,12 @@ func (a *App) navigateBackFromDetails() {
 		a.SetFocus(a.storageExplorerView)
 	case navigation.ViewBlobs:
 		a.SetFocus(a.blobsView)
+	case navigation.ViewKeyVaultSecrets:
+		a.SetFocus(a.keyVaultSecretsView)
+	case navigation.ViewKeyVaultKeys:
+		a.SetFocus(a.keyVaultKeysView)
+	case navigation.ViewKeyVaultCertificates:
+		a.SetFocus(a.keyVaultCertificatesView)
 	case navigation.ViewMenu:
 		a.SetFocus(a.menuView)
 	}
@@ -584,6 +695,26 @@ func (a *App) navigateBackToResourceType() {
 	// Go back to the resource type view (filtered resources)
 	resourceType := a.navState.SelectedResourceType
 	a.navigateToResourceType(resourceType)
+}
+
+// navigateBackToKeyVaultExplorer returns from Key Vault item views to Key Vault explorer
+func (a *App) navigateBackToKeyVaultExplorer() {
+	keyVaultName := a.navState.SelectedKeyVault
+	vaultURL := a.navState.SelectedKeyVaultURL
+	
+	// Navigate back to Key Vault explorer view
+	a.navState.CurrentView = navigation.ViewKeyVaultExplorer
+	
+	// Reload Key Vault explorer
+	ctx := context.Background()
+	err := a.keyVaultExplorerView.LoadKeyVault(ctx, keyVaultName, vaultURL)
+	if err != nil {
+		// TODO: Show error in UI
+		return
+	}
+	
+	a.updateLayout()
+	a.SetFocus(a.keyVaultExplorerView)
 }
 
 // navigateBackToResourceGroups returns from resources view to resource groups view
@@ -720,6 +851,182 @@ func (a *App) showBlobDetails(blob *models.Blob) {
 	}
 
 	a.detailsView.ShowBlobDetails(fullBlob, storageAccountName, containerName)
+	a.updateLayout()
+	a.SetFocus(a.detailsView)
+}
+
+// navigateToKeyVaultExplorer navigates to the Key Vault explorer view for a Key Vault
+func (a *App) navigateToKeyVaultExplorer(resource *models.Resource) {
+	keyVaultName := resource.Name
+	
+	// Extract vault URL from resource properties
+	vaultURL := ""
+	if resource.Properties != nil {
+		if vaultURIVal, ok := resource.Properties["vaultUri"]; ok {
+			if vaultURIStr, ok := vaultURIVal.(string); ok {
+				vaultURL = vaultURIStr
+			}
+		}
+	}
+	
+	// If not in properties, construct it
+	if vaultURL == "" {
+		vaultURL = fmt.Sprintf("https://%s.vault.azure.net/", keyVaultName)
+	}
+	
+	a.navState.NavigateToKeyVaultExplorer(keyVaultName, vaultURL)
+	
+	// Load Key Vault explorer
+	ctx := context.Background()
+	err := a.keyVaultExplorerView.LoadKeyVault(ctx, keyVaultName, vaultURL)
+	if err != nil {
+		// TODO: Show error in UI
+		return
+	}
+	
+	a.updateLayout()
+	a.SetFocus(a.keyVaultExplorerView)
+}
+
+// navigateToKeyVaultItemType navigates to the selected Key Vault item type (secrets, keys, or certificates)
+func (a *App) navigateToKeyVaultItemType(itemType string) {
+	ctx := context.Background()
+	vaultURL := a.navState.SelectedKeyVaultURL
+	keyVaultName := a.navState.SelectedKeyVault
+	
+	switch itemType {
+	case "secrets":
+		a.navState.NavigateToKeyVaultSecrets()
+		
+		// Load secrets
+		secrets, err := a.azureClient.ListSecrets(ctx, vaultURL)
+		if err != nil {
+			// TODO: Show error in UI
+			return
+		}
+		
+		err = a.keyVaultSecretsView.LoadSecrets(ctx, secrets, keyVaultName, vaultURL)
+		if err == nil {
+			a.updateFooterForTableView(a.keyVaultSecretsView.TableView)
+		}
+		a.updateLayout()
+		a.SetFocus(a.keyVaultSecretsView)
+		
+	case "keys":
+		a.navState.NavigateToKeyVaultKeys()
+		
+		// Load keys
+		keys, err := a.azureClient.ListKeys(ctx, vaultURL)
+		if err != nil {
+			// TODO: Show error in UI
+			return
+		}
+		
+		err = a.keyVaultKeysView.LoadKeys(ctx, keys, keyVaultName, vaultURL)
+		if err == nil {
+			a.updateFooterForTableView(a.keyVaultKeysView.TableView)
+		}
+		a.updateLayout()
+		a.SetFocus(a.keyVaultKeysView)
+		
+	case "certificates":
+		a.navState.NavigateToKeyVaultCertificates()
+		
+		// Load certificates
+		certificates, err := a.azureClient.ListCertificates(ctx, vaultURL)
+		if err != nil {
+			// TODO: Show error in UI
+			return
+		}
+		
+		err = a.keyVaultCertificatesView.LoadCertificates(ctx, certificates, keyVaultName, vaultURL)
+		if err == nil {
+			a.updateFooterForTableView(a.keyVaultCertificatesView.TableView)
+		}
+		a.updateLayout()
+		a.SetFocus(a.keyVaultCertificatesView)
+	}
+}
+
+// showSecretDetails shows the details view for a secret
+func (a *App) showSecretDetails(secret *models.Secret) {
+	a.navState.NavigateToDetails()
+	keyVaultName := a.navState.SelectedKeyVault
+	a.detailsView.ShowSecretDetails(secret, keyVaultName)
+	a.updateLayout()
+	a.SetFocus(a.detailsView)
+}
+
+// viewSecretValue shows the secret value with a confirmation dialog
+func (a *App) viewSecretValue(secret *models.Secret) {
+	// Create a modal for confirmation
+	modal := tview.NewModal().
+		SetText(fmt.Sprintf("Are you sure you want to view the value of secret '%s'?\n\n⚠️ This will display sensitive information on screen.", secret.Name)).
+		AddButtons([]string{"View", "Cancel"}).
+		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+			if buttonLabel == "View" {
+				// Fetch and show the secret value
+				ctx := context.Background()
+				vaultURL := a.navState.SelectedKeyVaultURL
+				value, err := a.azureClient.GetSecretValue(ctx, vaultURL, secret.Name)
+				if err != nil {
+					// TODO: Show error in UI
+					a.SetRoot(a.mainFlex, true)
+					return
+				}
+				
+				// Create a modal to display the value
+				valueModal := tview.NewModal().
+					SetText(fmt.Sprintf("Secret: %s\n\nValue:\n%s\n\nPress any key to close.", secret.Name, value)).
+					AddButtons([]string{"Close"}).
+					SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+						a.SetRoot(a.mainFlex, true)
+						a.SetFocus(a.keyVaultSecretsView)
+					})
+				a.SetRoot(valueModal, true)
+			} else {
+				a.SetRoot(a.mainFlex, true)
+				a.SetFocus(a.keyVaultSecretsView)
+			}
+		})
+	
+	a.SetRoot(modal, true)
+}
+
+// showKeyDetails shows the details view for a key
+func (a *App) showKeyDetails(key *models.Key) {
+	a.navState.NavigateToDetails()
+	keyVaultName := a.navState.SelectedKeyVault
+	
+	// Get full key details
+	ctx := context.Background()
+	vaultURL := a.navState.SelectedKeyVaultURL
+	fullKey, err := a.azureClient.GetKeyDetails(ctx, vaultURL, key.Name)
+	if err != nil {
+		// TODO: Show error in UI
+		return
+	}
+	
+	a.detailsView.ShowKeyDetails(fullKey, keyVaultName)
+	a.updateLayout()
+	a.SetFocus(a.detailsView)
+}
+
+// showCertificateDetails shows the details view for a certificate
+func (a *App) showCertificateDetails(cert *models.Certificate) {
+	a.navState.NavigateToDetails()
+	keyVaultName := a.navState.SelectedKeyVault
+	
+	// Get full certificate details
+	ctx := context.Background()
+	vaultURL := a.navState.SelectedKeyVaultURL
+	fullCert, err := a.azureClient.GetCertificateDetails(ctx, vaultURL, cert.Name)
+	if err != nil {
+		// TODO: Show error in UI
+		return
+	}
+	
+	a.detailsView.ShowCertificateDetails(fullCert, keyVaultName)
 	a.updateLayout()
 	a.SetFocus(a.detailsView)
 }

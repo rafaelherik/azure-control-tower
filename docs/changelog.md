@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Resources view with filtering
 - Storage explorer for Azure Storage accounts
 - Blob storage browser with folder navigation
+- **Key Vault explorer for Azure Key Vaults**
+  - Browse secrets, keys, and certificates
+  - View secret values with security confirmation
+  - Display key details and properties
+  - Show certificate information with expiration warnings
+  - Support for filtering across all Key Vault items
 - Resource details view
 - Filter/search functionality
 - Keyboard shortcuts for navigation
@@ -33,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - View resources by type
 - Explore storage accounts and containers
 - Browse blob storage
+- **Explore Azure Key Vaults**
+  - List and view secrets with secure value display
+  - Browse cryptographic keys
+  - Manage certificates with expiration monitoring
 - Filter resources by name/type
 - View detailed resource information
 - Modern terminal UI with tview

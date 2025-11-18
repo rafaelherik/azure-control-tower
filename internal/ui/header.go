@@ -141,29 +141,38 @@ func (hv *HeaderView) updateActions(navState *navigation.State) {
 		actions = append(actions, "[yellow]M[white] - Menu")
 	}
 
-	// Enter/Select action - available in subscriptions, resource groups, resource types, storage explorer, blobs
+	// Enter/Select action - available in subscriptions, resource groups, resource types, storage explorer, blobs, key vault views
 	if !navState.InDetailsView {
 		switch navState.CurrentView {
 		case navigation.ViewSubscriptions, navigation.ViewResourceGroups, navigation.ViewResourceTypes,
-			navigation.ViewStorageExplorer, navigation.ViewBlobs:
+			navigation.ViewStorageExplorer, navigation.ViewBlobs,
+			navigation.ViewKeyVaultExplorer, navigation.ViewKeyVaultSecrets, navigation.ViewKeyVaultKeys, navigation.ViewKeyVaultCertificates:
 			actions = append(actions, "[yellow]Enter[white] - Select")
 		}
 	}
 
-	// Explore action (E) - available in resources and resource type views for storage accounts
+	// Explore action (E) - available in resources and resource type views for storage accounts and Key Vaults
 	if !navState.InDetailsView {
 		if navState.CurrentView == navigation.ViewResources ||
-			(navState.CurrentView == navigation.ViewResourceType && navState.SelectedResourceType == "Microsoft.Storage/storageAccounts") {
+			(navState.CurrentView == navigation.ViewResourceType && 
+				(navState.SelectedResourceType == "Microsoft.Storage/storageAccounts" || 
+				 navState.SelectedResourceType == "Microsoft.KeyVault/vaults")) {
 			actions = append(actions, "[yellow]E[white] - Explore")
 		}
 	}
 
-	// Details action (d) - available in subscriptions, resource groups, resources, resource type, storage explorer, blobs
+	// View secret value action (V) - available in Key Vault secrets view
+	if !navState.InDetailsView && navState.CurrentView == navigation.ViewKeyVaultSecrets {
+		actions = append(actions, "[yellow]V[white] - View Value")
+	}
+
+	// Details action (d) - available in subscriptions, resource groups, resources, resource type, storage explorer, blobs, and Key Vault views
 	// Not available in resource types view or details view
 	if !navState.InDetailsView {
 		switch navState.CurrentView {
 		case navigation.ViewSubscriptions, navigation.ViewResourceGroups, navigation.ViewResources,
-			navigation.ViewResourceType, navigation.ViewStorageExplorer, navigation.ViewBlobs:
+			navigation.ViewResourceType, navigation.ViewStorageExplorer, navigation.ViewBlobs,
+			navigation.ViewKeyVaultSecrets, navigation.ViewKeyVaultKeys, navigation.ViewKeyVaultCertificates:
 			actions = append(actions, "[yellow]d[white] - Details")
 		}
 	}

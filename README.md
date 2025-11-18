@@ -24,6 +24,7 @@ Azure Command Tower (azct) is a terminal-based UI for exploring and managing Azu
 
 - 🔍 **Browse Azure Resources**: Navigate through subscriptions, resource groups, and resources
 - 📦 **Storage Explorer**: Explore Azure Storage accounts, containers, and blobs
+- 🔐 **Key Vault Explorer**: Browse and manage secrets, keys, and certificates in Azure Key Vaults
 - 🔎 **Filter & Search**: Quickly find resources using built-in filtering
 - 📊 **Resource Details**: View detailed information about any Azure resource
 - 🎨 **Modern TUI**: Beautiful terminal interface built with [tview](https://github.com/rivo/tview)
@@ -94,6 +95,7 @@ go install github.com/rafaelherik/azure-control-tower/cmd/azct@latest
 - **Resources View**: View all resources filtered by type
 - **Storage Explorer**: Explore storage accounts and containers
 - **Blobs View**: Browse blob storage with folder navigation
+- **Key Vault Explorer**: Browse secrets, keys, and certificates in Key Vaults
 
 ### Keyboard Shortcuts
 
@@ -103,7 +105,8 @@ go install github.com/rafaelherik/azure-control-tower/cmd/azct@latest
 | `Enter` | Select/view details |
 | `/` | Open filter/search |
 | `d` | Show details |
-| `e` | Explore storage (for storage accounts) |
+| `e` | Explore resource (storage accounts, Key Vaults) |
+| `v` | View secret value (Key Vault secrets only) |
 | `m` | Open resource type menu |
 | `ESC` | Go back |
 | `q` | Quit |

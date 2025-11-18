@@ -12,6 +12,10 @@ const (
 	ViewDetails
 	ViewStorageExplorer
 	ViewBlobs
+	ViewKeyVaultExplorer
+	ViewKeyVaultSecrets
+	ViewKeyVaultKeys
+	ViewKeyVaultCertificates
 	ViewMenu
 )
 
@@ -27,6 +31,8 @@ type State struct {
 	SelectedContainer         string
 	SelectedBlob              string
 	BlobPathPrefix            string // Current folder path prefix in blob view
+	SelectedKeyVault          string
+	SelectedKeyVaultURL       string
 }
 
 // NewState creates a new navigation state
@@ -157,4 +163,45 @@ func (s *State) NavigateBackFromMenu() {
 	// Restore previous view - for now, go back to subscriptions
 	// In a more sophisticated implementation, we could track the previous view
 	s.NavigateToSubscriptions()
+}
+
+// NavigateToKeyVaultExplorer navigates to the Key Vault explorer view
+func (s *State) NavigateToKeyVaultExplorer(keyVaultName, vaultURL string) {
+	s.CurrentView = ViewKeyVaultExplorer
+	s.SelectedKeyVault = keyVaultName
+	s.SelectedKeyVaultURL = vaultURL
+	s.InDetailsView = false
+}
+
+// NavigateToKeyVaultSecrets navigates to the secrets view for a Key Vault
+func (s *State) NavigateToKeyVaultSecrets() {
+	s.CurrentView = ViewKeyVaultSecrets
+	s.InDetailsView = false
+}
+
+// NavigateToKeyVaultKeys navigates to the keys view for a Key Vault
+func (s *State) NavigateToKeyVaultKeys() {
+	s.CurrentView = ViewKeyVaultKeys
+	s.InDetailsView = false
+}
+
+// NavigateToKeyVaultCertificates navigates to the certificates view for a Key Vault
+func (s *State) NavigateToKeyVaultCertificates() {
+	s.CurrentView = ViewKeyVaultCertificates
+	s.InDetailsView = false
+}
+
+// NavigateBackFromKeyVaultSecrets returns from secrets view to Key Vault explorer
+func (s *State) NavigateBackFromKeyVaultSecrets() {
+	s.CurrentView = ViewKeyVaultExplorer
+}
+
+// NavigateBackFromKeyVaultKeys returns from keys view to Key Vault explorer
+func (s *State) NavigateBackFromKeyVaultKeys() {
+	s.CurrentView = ViewKeyVaultExplorer
+}
+
+// NavigateBackFromKeyVaultCertificates returns from certificates view to Key Vault explorer
+func (s *State) NavigateBackFromKeyVaultCertificates() {
+	s.CurrentView = ViewKeyVaultExplorer
 }
